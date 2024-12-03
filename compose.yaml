@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  app:
+    image: torch-mamba 
+    volumes:
+      - .:/workspace
+    command: sleep infinity
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

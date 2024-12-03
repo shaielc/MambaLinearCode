@@ -9,8 +9,9 @@ from torch.utils.data import DataLoader
 from datetime import datetime
 from typing import Optional
 
-from models import ECC_Transformer, Config, Code, freeze_weights
-from dataset import EbN0_to_std, ECC_Dataset, test, train, set_seed, Get_Generator_and_Parity, CODES_PATH
+from configuration import Config, Code
+from models.AECCT import ECC_Transformer, freeze_weights
+from dataset import EbN0_to_std, ECC_Dataset, test, train, set_seed, get_generator_and_parity, CODES_PATH
 
 
 def test_model(args: Config, model: torch.nn.Module, device: str):
@@ -115,7 +116,7 @@ def preapre_args(code_hint: str = None, results_folder_name: str = "Results_AECC
 
     code = Code(code_n, code_k, code_type)
 
-    G, H = Get_Generator_and_Parity(code, standard_form=args.standardize)
+    G, H = get_generator_and_parity(code, standard_form=args.standardize)
     code.generator_matrix = torch.from_numpy(G).transpose(0, 1).long()
     code.pc_matrix = torch.from_numpy(H).long()
     args.code = code

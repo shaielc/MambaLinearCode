@@ -229,6 +229,7 @@ class ECC_Transformer(nn.Module):
         return self.out_fc(self.oned_final_embed(emb).squeeze(-1))
 
     def loss(self, z_pred, z2, y):
+        # TODO: extract to function.
         loss = F.binary_cross_entropy_with_logits(
             z_pred, sign_to_bin(torch.sign(z2)))
         x_pred = sign_to_bin(torch.sign(-z_pred * torch.sign(y)))

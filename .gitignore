@@ -1,0 +1,7 @@
+.venv
+*.pyc
+
+# Checkpoints
+best_model
+*_checkpoint
+logging.txt

@@ -16,6 +16,7 @@ class Config():
     # training param
     epochs: int = 1000
     workers: int = 4
+    warmup_lr: int = 1e-3
     lr: float = 1e-4
     gpus: str = '-1'
     batch_size: int = 128
@@ -29,6 +30,7 @@ class Config():
     # dimensions
     N_dec: int = 10
     d_model: int = 128
+    d_state: int = 16
     h: int = 8
     code: Code = None
 

@@ -1,6 +1,8 @@
-torch
+# torch
 numpy
 einops
 tqdm
 matplotlib
 seaborn
+causal-conv1d>=1.4.0
+mamba-ssm

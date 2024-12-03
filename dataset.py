@@ -89,7 +89,7 @@ def FER(x_pred, x_gt):
     return torch.mean(torch.any(x_pred != x_gt, dim=1).float()).item()
 
 #############################################
-def Get_Generator_and_Parity(code, standard_form = False):
+def get_generator_and_parity(code, standard_form = False):
     n, k = code.n, code.k
     path_pc_mat = os.path.join(CODES_PATH, f'{code.code_type}_N{str(n)}_K{str(k)}')
     if code.code_type in ['POLAR', 'BCH']:
