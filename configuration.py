@@ -22,7 +22,7 @@ class Config():
     batch_size: int = 128
     test_batch_size: int = 512
     seed: int = 42
-    eta_min=1e-6
+    eta_min: float =1e-6
 
     # code params
     standardize: bool = True

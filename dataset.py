@@ -140,7 +140,7 @@ class ECC_Dataset(data.Dataset):
         else:
             m = self.zero_word
             x = self.zero_cw
-        z = torch.randn(self.code.n) * random.choice(self.sigma)
+        z = torch.randn(self.code.n) * self.sigma[index%len(self.sigma)]
         y = bin_to_sign(x) + z
         magnitude = torch.abs(y)
         syndrome = torch.matmul(sign_to_bin(torch.sign(y)).long(),
