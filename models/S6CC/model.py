@@ -47,7 +47,7 @@ class ECCM(torch.nn.Module):
             xi = x*torch.sign(bin_to_sign(self.activation(out)))
             diff = sublayer.forward(xi)
             out = diff + out
-        return self.activation(out)
+        return self.activation(5*out)
 
     def loss(self, z_pred, z2, y):
         loss = F.binary_cross_entropy(z_pred, z2)

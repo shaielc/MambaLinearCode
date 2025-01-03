@@ -22,14 +22,18 @@ class EncoderLayer(torch.nn.Module):
             if p.dim() > 1:
                 torch.nn.init.xavier_uniform_(p)
         
-        # For tests:
-        Azer = torch.zeros_like(self.Sa.weight)
-        Bzer = torch.zeros_like(self.Sb.weight)
-        Czer = torch.zeros_like(self.Sc.weight)
-        with torch.no_grad():
-            self.Sa.weight.copy_(Azer)
-            self.Sb.weight.copy_(Bzer)
-            self.Sc.weight.copy_(Czer)
+        # # For tests:
+        # Azer = torch.zeros_like(self.Sa.weight)
+        # Bzer = torch.zeros_like(self.Sb.weight)
+        # Czer = torch.zeros_like(self.Sc.weight)
+        # rw_zer = torch.ones_like(self.resize_output.weight)
+        # rb_zer = torch.zeros_like(self.resize_output.bias)
+        # with torch.no_grad():
+        #     self.Sa.weight.copy_(Azer)
+        #     self.Sb.weight.copy_(Bzer)
+        #     self.Sc.weight.copy_(Czer)
+        #     self.resize_output.weight.copy_(rw_zer)
+        #     self.resize_output.bias.copy_(rb_zer)
         
         # Azer = torch.randn_like(self.Sa.weight)
         # Bzer = torch.randn_like(self.Sb.weight)
@@ -77,10 +81,10 @@ class EncoderLayer(torch.nn.Module):
         A = 1.0 # self.Sa(X)
         Bbias = (h @ pc_matrix).unsqueeze(-1)
         Binf = self.Sb(torch.abs(X))
-        B =  Bbias + \
-            Binf
+        B = Bbias/torch.abs(Bbias).max() + \
+            F.tanh(Binf)
             # h0 = syndrome
-        C = 0.5 + self.Sc(torch.abs(X))
+        C = 0.5 + F.tanh(self.Sc(torch.abs(X)))
         
         for i in range(self.seq_len):
             h, states[..., i, :], y[..., i, :] = self._ssm_iteration(
@@ -118,7 +122,6 @@ class EncoderLayer(torch.nn.Module):
         X = self.embed(X)
         y1,y2,*rest = self._bider_pass(X,h)
         out = y1+y2
-        return self.activation(
-            self.resize_output(out),
-            dim=-2
-        )
+        out_resized = self.resize_output(out)
+        out_activated = self.activation(out_resized,dim=-2)
+        return out_activated
