@@ -1,0 +1,8 @@
+Mamba:
+[ ] - Test without the conv later
+[ ] - Test with gradient clipping
+[ ] - Verify masking helps, and works as expected.
+[ ] - Test Jamba
+
+Custom:
+[ ] - Test with matrix multiplication
