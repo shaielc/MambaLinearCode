@@ -6,3 +6,4 @@ best_model
 *_checkpoint
 logging.txt
 events.out.tfevents*
+.ipynb_checkpoints
