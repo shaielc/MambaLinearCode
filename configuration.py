@@ -16,13 +16,15 @@ class Config():
     # training param
     epochs: int = 1000
     workers: int = 4
-    warmup_lr: int = 1e-3
+    warmup_lr: float = 1e-3
+    warmup_length: int = 10
     lr: float = 1e-4
     gpus: str = '-1'
     batch_size: int = 128
     test_batch_size: int = 512
     seed: int = 42
     eta_min: float =1e-6
+    gradient_clipping: float = 1.0
 
     # code params
     standardize: bool = True
